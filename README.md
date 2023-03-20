@@ -29,7 +29,7 @@ _Emaner batch renames your files_
 
 * 
 
-### USE REGULAR EXPRESSIONS TO FIND ANYTHING YOU WANT
+### USE REGULAR EXPRESSIONS 
 
 <br />
 
