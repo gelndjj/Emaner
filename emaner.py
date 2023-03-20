@@ -7,7 +7,7 @@ root = customtkinter.CTk()
 root.geometry('700x500')
 root.title('Emaner')
 root.resizable(0,0)
-customtkinter.set_appearance_mode("dark")
+customtkinter.set_appearance_mode("light")
 
 def browse():
      global f
