@@ -30,7 +30,10 @@ def clean_new_entry_re(event):
 def clean_old_entry_re(event):
      old_entry_re.delete(0,END)
 
-def rename_all_file():
+def clean_new_entry_rename(event):
+     new_entry_rename.delete(0,END)
+
+def replace_all_file():
     for file in os.listdir(f):
             current_full_path = f+'/'+file
             current_fname = os.path.basename(current_full_path)
@@ -44,7 +47,22 @@ def rename_all_file():
         if os.path.isfile(os.path.join(f,file)):
             ls_box.insert(END,f'{file}\n')
 
-def rename_all_file_re():
+def rename_all_file():
+    occur = 0
+    for file in os.listdir(f):
+            current_full_path = f+'/'+file
+            current_fname = os.path.basename(current_full_path)
+            current_fname_withtout_ext = os.path.splitext(current_fname)[0]
+            current_fname_ext = os.path.splitext(current_fname)[1]
+            new_full_path = f+'/'+new_entry_rename.get()+' ('+str(occur)+')'+current_fname_ext
+            final_fname = os.rename(current_full_path,new_full_path)
+            occur += 1
+    ls_box.delete(0,END)
+    for file in os.listdir(f):
+        if os.path.isfile(os.path.join(f,file)):
+            ls_box.insert(END,f'{file}\n')
+
+def replace_all_file_re():
     number = 0
     pattern = new_entry_re.get()
     re_pattern = f'{pattern}'
@@ -128,11 +146,11 @@ title_lbl = customtkinter.CTkLabel(left_fr,
 title_lbl.place(x=20.0, y=80.0)
 
 text_lbl = customtkinter.CTkLabel(left_fr,
-                                  text="Enamer renames your files \n"
+                                  text="Emaner renames your files \n"
                                         "according to your will.\n" 
                                         "Simply type the text\n"
                                         "you want to change and click\n"
-                                        "on Rename.\n\n"
+                                        "on Replace or Rename.\n\n"
     
                                         "Regular Expression can be\n"
                                         "also used to rename.\n"
@@ -152,19 +170,19 @@ warning_lbl = customtkinter.CTkLabel(left_fr,
                                      fg_color='#3A7FF6',
                                      text_color='White',
                                      justify='center')
-warning_lbl.place(x=20,y=420)
+#warning_lbl.place(x=20,y=420)
 
 #ENTRY BOXES
 new_entry = customtkinter.CTkEntry(right_fr,
-                                      width=120,
+                                      width=90,
                                       height=30,
                                       border_width=1,
                                       corner_radius=1,
                                       fg_color='#e8e6e6',
                                       border_color='Black',
                                       text_color='Black')
-new_entry.place(x=30,y=315)
-new_entry.insert(0,'New string')
+new_entry.place(x=120,y=273)
+new_entry.insert(0,'Old String')
 
 new_entry_re = customtkinter.CTkEntry(right_fr,
                                       width=120,
@@ -174,12 +192,22 @@ new_entry_re = customtkinter.CTkEntry(right_fr,
                                       fg_color='#e8e6e6',
                                       border_color='Black',
                                       text_color='Black')
-new_entry_re.place(x=30,y=423)
-new_entry_re.insert(0,'New string RE')
+new_entry_re.place(x=30,y=383)
+new_entry_re.insert(0,'Old String RE')
 
+new_entry_rename = customtkinter.CTkEntry(right_fr,
+                                      width=120,
+                                      height=30,
+                                      border_width=1,
+                                      corner_radius=1,
+                                      fg_color='#e8e6e6',
+                                      border_color='Black',
+                                      text_color='Black')
+new_entry_rename.place(x=165,y=440)
+new_entry_rename.insert(0,'New Name')
 
 old_entry = customtkinter.CTkEntry(right_fr,
-                                   width=120,
+                                   width=90,
                                    height=30,
                                    border_width=1,
                                    corner_radius=1,
@@ -187,8 +215,8 @@ old_entry = customtkinter.CTkEntry(right_fr,
                                    border_color='Black',
                                    text_color='Black',
                                    )
-old_entry.place(x=165,y=315)
-old_entry.insert(0,'Old string')
+old_entry.place(x=205,y=273)
+old_entry.insert(0,'New String')
 
 old_entry_re = customtkinter.CTkEntry(right_fr,
                                    width=120,
@@ -199,8 +227,8 @@ old_entry_re = customtkinter.CTkEntry(right_fr,
                                    border_color='Black',
                                    text_color='Black',
                                    )
-old_entry_re.place(x=165,y=423)
-old_entry_re.insert(0,'Old string RE')
+old_entry_re.place(x=165,y=383)
+old_entry_re.insert(0,'New String RE')
 
 #BUTTONS
 btn_browse = customtkinter.CTkButton(right_fr,
@@ -214,26 +242,36 @@ btn_browse = customtkinter.CTkButton(right_fr,
                                      command=browse)
 btn_browse.place(x=120,y=30)
 
-btn_rename = customtkinter.CTkButton(right_fr,
-                                     text='Rename',
-                                     width=150,
+btn_replace = customtkinter.CTkButton(right_fr,
+                                     text='Replace',
+                                     width=80,
                                      height=30,
                                      fg_color='#3A7FF6',
                                      text_color='White',
                                      border_color='Black',
                                      border_width=2,
-                                     command=rename_all_file)
-btn_rename.place(x=30,y=268)
-btn_rename_re = customtkinter.CTkButton(right_fr,
-                                     text='Rename using Regular Expression',
+                                     command=replace_all_file)
+btn_replace.place(x=30,y=273)
+btn_replace_re = customtkinter.CTkButton(right_fr,
+                                     text='Replace using Regular Expression',
                                      width=180,
                                      height=30,
                                      fg_color='Red',
                                      text_color='White',
                                      border_color='Black',
                                      border_width=2,
-                                     command=rename_all_file_re)
-btn_rename_re.place(x=30,y=375)
+                                     command=replace_all_file_re)
+btn_replace_re.place(x=30,y=335)
+btn_rename = customtkinter.CTkButton(right_fr,
+                                     text='Rename',
+                                     width=120,
+                                     height=30,
+                                     fg_color='#3A7FF6',
+                                     text_color='White',
+                                     border_color='Black',
+                                     border_width=2,
+                                     command=rename_all_file)
+btn_rename.place(x=30,y=440)
 
 btn_rollback = customtkinter.CTkButton(right_fr,
                                      text='Rollback',
@@ -244,8 +282,8 @@ btn_rollback = customtkinter.CTkButton(right_fr,
                                      border_color='Black',
                                      border_width=2,
                                      command=rollback)
-btn_rollback.place(x=305,y=268)
-btn_rollback_re = customtkinter.CTkButton(right_fr,
+btn_rollback.place(x=305,y=273)
+btn_quit = customtkinter.CTkButton(right_fr,
                                      text='Quit',
                                      width=70,
                                      height=30,
@@ -254,8 +292,7 @@ btn_rollback_re = customtkinter.CTkButton(right_fr,
                                      border_color='Black',
                                      border_width=2,
                                      command=lambda:root.destroy())
-btn_rollback_re.place(x=305,y=375)
-
+btn_quit.place(x=305,y=440)
 btn_reg_instructions = customtkinter.CTkButton(left_fr,
                                                text='Regular Exp. Examples',
                                                width=50,
@@ -282,6 +319,6 @@ new_entry.bind("<FocusIn>",clean_new_entry)
 old_entry.bind("<FocusIn>",clean_old_entry)
 new_entry_re.bind("<FocusIn>",clean_new_entry_re)
 old_entry_re.bind("<FocusIn>",clean_old_entry_re)
-
+new_entry_rename.bind("<FocusIn>",clean_new_entry_rename)
 
 root.mainloop()
