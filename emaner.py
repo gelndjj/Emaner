@@ -45,6 +45,7 @@ def rename_all_file():
             ls_box.insert(END,f'{file}\n')
 
 def rename_all_file_re():
+    number = 0
     pattern = new_entry_re.get()
     re_pattern = f'{pattern}'
     for file in os.listdir(f):
@@ -53,8 +54,9 @@ def rename_all_file_re():
             current_fname_withtout_ext = os.path.splitext(current_fname)[0]
             current_fname_ext = os.path.splitext(current_fname)[1]
             new_fname = re.sub(re_pattern,old_entry_re.get(),current_fname_withtout_ext)
-            new_full_path = f+'/'+new_fname+current_fname_ext
+            new_full_path = f+'/'+new_fname+' ('+str(number)+')'+current_fname_ext
             final = os.rename(current_full_path,new_full_path)
+            number += 1
     ls_box.delete(0,END)
     for file in os.listdir(f):
         if os.path.isfile(os.path.join(f,file)):
