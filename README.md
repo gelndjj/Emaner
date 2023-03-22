@@ -30,7 +30,7 @@ Finally you have the option to batch rename your files by typing the name you wa
 3. And type the new string by which you want the file to be modified in the New String field.
 4. Click on Replace, the result is automatically shown in the window above. 
 
-In the example below, we replace the string "Screenshot" by "Capture".
+* In the example below, we replace the string "Screenshot" by "Capture".
 
 ![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_1.png)
 
@@ -55,7 +55,7 @@ According to the instructions the RE will be:<br /><br />
 
 ![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re_1.png)
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re_2.png)
+![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re2.png)
 
 ### BATCH RENAME FEATURE
 On the last field, type a name you want your files to have and click on the rename button.<br />
@@ -63,7 +63,7 @@ All the present files will be named with this name and a number will be added at
 
 * Here is an example below where "Capture" will be the new name of every files. 
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename1.png)
+![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename_1.png)
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename2.png)
+![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename_2.png)
 
