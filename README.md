@@ -15,7 +15,7 @@ _Emaner can batch rename your files. It also has the ability to replace any stri
 
 ### SUMMARY
 Emaner grabs files from a folder you select and then gives you the option to replace a character or a character sequence in the files name.<br />
-The soft allows you to use Regular Expressions and has an windows showing you some examples to  use them.<br />
+The soft allows you to use Regular Expressions and has some instructions to better understand of RE work.<br />
 Finally you have the option to batch rename your files by typing the name you want; if the chosen name is identical to other files you are renaming, a number sequence will be added at final.<br />
 
 ### SCREENSHOTS
