@@ -55,6 +55,12 @@ According to the instructions the RE will be:<br /><br />
 
 ![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re_1.png)
 
+* Let's replace the above quoted pattern by the following {date}
+  
+> \d{2}\.\d{2}\.\d{2}<br />
+
+> {date}<br/>
+> 
 ![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re2.png)
 
 ### BATCH RENAME FEATURE
