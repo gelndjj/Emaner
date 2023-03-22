@@ -76,7 +76,7 @@ All the present files will be named with this name and a number will be added at
 ### ROLLBACK BUTTON
 
 If you made a mistake renaming a file, click on the button Rollback and it will reverse the action.<br />
-#####However, it only works with the first Replace feature so far.<br />
+##### However, it only works with the first Replace feature so far.<br />
 
 ### REQUIREMENTS INSTALLATION
 
