@@ -34,7 +34,7 @@ Finally you have the option to batch rename your files by typing the name you wa
 
 ![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_1.png)
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_1.png)
+![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_2.png)
 
 ### USING REGULAR EXPRESSIONS
 The soft contains instructions to get familiar with RE; click on the Regular Exp. Examples button to display them.<br />
