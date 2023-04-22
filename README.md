@@ -79,5 +79,6 @@ If you made a mistake renaming a file, click on the button Rollback and it will 
 ##### However, it only works with the first Replace feature so far.<br />
 
 ### REQUIREMENTS INSTALLATION
-
-> pip install requirements.txt
+```
+pip install requirements.txt
+```
