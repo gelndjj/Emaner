@@ -1,324 +1,244 @@
-from tkinter import filedialog, ttk, messagebox
-from tkinter import  *
-import os, customtkinter, re
+import os
+import tkinter as tk
+from tkinter import ttk, filedialog
+import re
 
-root = customtkinter.CTk()
+class FileRenamerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("File Renamer")
+        self.root.geometry("830x300")
+        self.selected_extension = "All extensions"  # Default selection
 
-root.geometry('700x500')
-root.title('Emaner')
-root.resizable(0,0)
-customtkinter.set_appearance_mode("light")
+        # Left Frame
+        self.left_frame = tk.Frame(self.root, bg='#3A7FF6', width=220)
+        self.left_frame.pack(side=tk.LEFT, fill=tk.BOTH)
 
-def browse():
-     global f
+        label_title = ("Welcome to Emaner")
 
-     f = filedialog.askdirectory()
-     ls_box.delete(0,END)
-     for file in os.listdir(f):
-        if os.path.isfile(os.path.join(f,file)):
-            ls_box.insert(END,f'{file}\n')
+        label_text = ("Emaner renames your files \n"
+                      "according to your will.\n\n"
+                      "Simply type the text\n"
+                      "to see the change\n"
+                      "and click on Rename Files.\n\n"
+                      )
 
-def clean_new_entry(event):
-     new_entry.delete(0,END)
+        self.left_label_title = tk.Label(self.left_frame, text=label_title, justify=tk.LEFT, bg='#3A7FF6', fg='white', font=("Arial-BoldMT", int(18.0)))
+        self.left_label_title.place(x=4,y=20)
 
-def clean_old_entry(event):
-     old_entry.delete(0,END)
+        self.left_label = tk.Label(self.left_frame, text=label_text, justify=tk.LEFT, bg='#3A7FF6', fg='white', font=("Georgia", int(14.0)))
+        self.left_label.place(x=4,y=80)
 
-def clean_new_entry_re(event):
-     new_entry_re.delete(0,END)
+        # Right Frame
+        self.right_frame = tk.Frame(self.root)
+        self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-def clean_old_entry_re(event):
-     old_entry_re.delete(0,END)
+        # Add a ComboBox to select extensions
+        self.extension_combobox = ttk.Combobox(self.right_frame, values=[], state="readonly", width=12)
+        self.extension_combobox.place(x=260, y=235)
+        self.extension_combobox.bind("<<ComboboxSelected>>", self.update_extension_listbox)
 
-def clean_new_entry_rename(event):
-     new_entry_rename.delete(0,END)
+        self.replace_file_list = []
+        self.replace_include_subfolders = tk.IntVar(value=0)
+        self.replace_use_regex = tk.IntVar(value=0)
+        self.replace_preserve_extensions = tk.IntVar(value=0)
+        self.replace_string = tk.StringVar(value="")
+        self.replace_new_string = tk.StringVar(value="")
 
-def replace_all_file():
-    for file in os.listdir(f):
-            current_full_path = f+'/'+file
-            current_fname = os.path.basename(current_full_path)
-            current_fname_withtout_ext = os.path.splitext(current_fname)[0]
-            current_fname_ext = os.path.splitext(current_fname)[1]
-            new_fname = current_fname_withtout_ext.replace(new_entry.get(),old_entry.get())
-            new_full_path = f+'/'+new_fname+current_fname_ext
-            final_fname = os.rename(current_full_path,new_full_path)
-    ls_box.delete(0,END)
-    for file in os.listdir(f):
-        if os.path.isfile(os.path.join(f,file)):
-            ls_box.insert(END,f'{file}\n')
+        self.replace_select_button = tk.Button(self.root, text="Select Folder", command=self.replace_select_folder)
+        self.replace_select_button.pack(pady=10)
 
-def rename_all_file():
-    occur = 0
-    for file in os.listdir(f):
-            current_full_path = f+'/'+file
-            current_fname = os.path.basename(current_full_path)
-            current_fname_withtout_ext = os.path.splitext(current_fname)[0]
-            current_fname_ext = os.path.splitext(current_fname)[1]
-            new_full_path = f+'/'+new_entry_rename.get()+' ('+str(occur)+')'+current_fname_ext
-            final_fname = os.rename(current_full_path,new_full_path)
-            occur += 1
-    ls_box.delete(0,END)
-    for file in os.listdir(f):
-        if os.path.isfile(os.path.join(f,file)):
-            ls_box.insert(END,f'{file}\n')
+        self.replace_listbox = tk.Listbox(self.right_frame, selectmode=tk.MULTIPLE, width=40, height=12)
+        self.replace_listbox.place(x=28, y=12)
 
-def replace_all_file_re():
-    number = 0
-    pattern = new_entry_re.get()
-    re_pattern = f'{pattern}'
-    for file in os.listdir(f):
-            current_full_path = f+'/'+file
-            current_fname = os.path.basename(current_full_path)
-            current_fname_withtout_ext = os.path.splitext(current_fname)[0]
-            current_fname_ext = os.path.splitext(current_fname)[1]
-            new_fname = re.sub(re_pattern,old_entry_re.get(),current_fname_withtout_ext)
-            new_full_path = f+'/'+new_fname+' ('+str(number)+')'+current_fname_ext
-            final = os.rename(current_full_path,new_full_path)
-            number += 1
-    ls_box.delete(0,END)
-    for file in os.listdir(f):
-        if os.path.isfile(os.path.join(f,file)):
-            ls_box.insert(END,f'{file}\n')
+        self.replace_subfolder_checkbox = tk.Checkbutton(self.root, text="Include Subfolders",
+                                                         variable=self.replace_include_subfolders,
+                                                         command=self.update_replace_listbox)
+        self.replace_subfolder_checkbox.pack()
 
-def rollback():
-    pattern = old_entry.get()
-    for file in os.listdir(f):
-            current_full_path = f+'/'+file
-            current_fname = os.path.basename(current_full_path)
-            current_fname_withtout_ext = os.path.splitext(current_fname)[0]
-            current_fname_ext = os.path.splitext(current_fname)[1]
-            new_fname = current_fname_withtout_ext.replace(pattern,new_entry.get())
-            new_full_path = f+'/'+new_fname+current_fname_ext
-            final_fname = os.rename(current_full_path,new_full_path)
-    ls_box.delete(0,END)
-    for file in os.listdir(f):
-        if os.path.isfile(os.path.join(f,file)):
-            ls_box.insert(END,f'{file}\n')
+        self.replace_regex_checkbox = tk.Checkbutton(self.root, text="Regular Expression",
+                                                     variable=self.replace_use_regex,
+                                                     command=self.update_replace_listbox)
+        self.replace_regex_checkbox.pack()
 
-def show_ins():
-     re_exp = Toplevel(root)
-     re_exp.title('Regular Expressions Examples')
-     re_exp.geometry('450x260')
-     re_exp.resizable(0,0)
+        self.replace_preserve_ext_checkbox = tk.Checkbutton(self.root, text="Preserve Extensions",
+                                                            variable=self.replace_preserve_extensions,
+                                                            command=self.update_replace_listbox)
+        self.replace_preserve_ext_checkbox.pack()
 
-     re_exp_listbox = Listbox(re_exp,
-                            width=45,
-                            height=15,
-                            borderwidth=1,
-                            background='#e8e6e6')
-     re_exp_listbox.pack()
-     re_exp_listbox.insert(END,'. - Matches any single character except newline.\n',
-                                '^ - Matches the start of a string.\n',
-                                '$ - Matches the end of a string.\n',
-                                '* - Matches zero or more occurrences of the previous character or group.\n',
-                                '+ - Matches one or more occurrences of the previous character or group.\n',
-                                '? - Matches zero or one occurrence of the previous character or group.\n',
-                                '{n} - Matches exactly n occurrences of the previous character or group.\n',
-                                '{n,} - Matches n or more occurrences of the previous character or group.\n',
-                                '{n,m} - Matches at least n and at most m occurrences of the previous character or group.\n',
-                                '[abc] - Matches any one of the characters a, b, or c.\n',
-                                '[^abc] - Matches any character except a, b, or c.\n',
-                                '| - Matches either the expression before or after the vertical bar.\n',
-                                '\d - Matches any digit (0-9).\n',
-                                '\D - Matches any character that is not a digit.\n',
-                                '\w - Matches any word character (a-z, A-Z, 0-9, and underscore).\n',
-                                '\W - Matches any character that is not a word character.\n',
-                                '\s - Matches any whitespace character (space, tab, newline, etc.).\n',
-                                '\S - Matches any non-whitespace character.')
+        self.replace_label = tk.Label(self.root, text="Replace:")
+        self.replace_label.pack()
 
-#FRAMES
-left_fr = customtkinter.CTkFrame(root,corner_radius=0,fg_color='#3A7FF6',width=300)
-left_fr.pack(side=LEFT,fill=Y)
-right_fr = customtkinter.CTkFrame(root,corner_radius=0, fg_color='White',width=400)
-right_fr.pack(side=RIGHT,fill=Y)
+        self.replace_entry = tk.Entry(self.root, textvariable=self.replace_string)
+        self.replace_entry.pack()
 
-#LABEL FRAME
-frame1 = LabelFrame(right_fr, text='One',fg='#5c5b5b', bg='White',relief=GROOVE)
-frame1.place(x=30,y=268)
+        self.replace_new_label = tk.Label(self.root, text="New:")
+        self.replace_new_label.pack()
 
-#LABELS
-title_lbl = customtkinter.CTkLabel(left_fr,
-                                   text="Welcome to Emaner",
-                                    fg_color="#3A7FF6",
-                                    text_color='white',
-                                    justify="left",
-                                    font=("Arial-BoldMT", int(20.0)))
-title_lbl.place(x=20.0, y=80.0)
+        self.replace_new_entry = tk.Entry(self.root, textvariable=self.replace_new_string)
+        self.replace_new_entry.pack()
 
-text_lbl = customtkinter.CTkLabel(left_fr,
-                                  text="Emaner renames your files \n"
-                                        "according to your will.\n" 
-                                        "Simply type the text\n"
-                                        "you want to change and click\n"
-                                        "on Replace or Rename.\n\n"
-    
-                                        "Regular Expression can be\n"
-                                        "also used to rename.\n"
-                                        "Click on the button below\n"
-                                        "to see examples",
-                                    fg_color="#3A7FF6",
-                                    text_color='White',
-                                    justify="left",
-                                    font=("Georgia", int(15.0)))
-text_lbl.place(x=20.0, y=160.0)
+        self.replace_rename_button = tk.Button(self.root, text="Rename Files", command=self.rename_replace_files)
+        self.replace_rename_button.pack(pady=10)
 
-warning_lbl = customtkinter.CTkLabel(left_fr,
-                                     text='BE CAREFUL renaming by using RE.\n'
-                                     'BE SURE the file you are renaming won\'t have\n'
-                                     'the same name than others.\n'
-                                     'Otherwise, the file WILL BE DELETED.',
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     justify='center')
-#warning_lbl.place(x=20,y=420)
+        self.replace_re_button = tk.Button(self.root, text="?", command=self.show_ins)
+        self.replace_re_button.place(x=393,y=68)
 
-#ENTRY BOXES
-new_entry = customtkinter.CTkEntry(right_fr,
-                                      width=90,
-                                      height=30,
-                                      border_width=1,
-                                      corner_radius=1,
-                                      fg_color='#e8e6e6',
-                                      border_color='Black',
-                                      text_color='Black')
-new_entry.place(x=120,y=273)
-new_entry.insert(0,'Old String')
+        self.replace_string.trace("w", self.update_replace_listbox)
+        self.replace_new_string.trace("w", self.update_replace_listbox)
 
-new_entry_re = customtkinter.CTkEntry(right_fr,
-                                      width=120,
-                                      height=30,
-                                      border_width=1,
-                                      corner_radius=1,
-                                      fg_color='#e8e6e6',
-                                      border_color='Black',
-                                      text_color='Black')
-new_entry_re.place(x=30,y=383)
-new_entry_re.insert(0,'Old String RE')
+    def update_extension_combobox(self):
+        extensions = set()
+        extensions.add("All extensions")  # Add "All extensions" as the first option
+        for file_path in self.replace_file_list:
+            _, extension = os.path.splitext(file_path)
+            extensions.add(extension)
+        self.extension_combobox["values"] = sorted(list(extensions))  # Sort the extensions
 
-new_entry_rename = customtkinter.CTkEntry(right_fr,
-                                      width=120,
-                                      height=30,
-                                      border_width=1,
-                                      corner_radius=1,
-                                      fg_color='#e8e6e6',
-                                      border_color='Black',
-                                      text_color='Black')
-new_entry_rename.place(x=165,y=440)
-new_entry_rename.insert(0,'New Name')
+    def update_extension_listbox(self, event=None):
+        self.selected_extension = self.extension_combobox.get()
+        self.update_replace_listbox()
+        selected_extension = self.extension_combobox.get()
+        self.replace_listbox.delete(0, tk.END)
+        replace_text = self.replace_string.get()
+        new_text = self.replace_new_string.get() or ""
 
-old_entry = customtkinter.CTkEntry(right_fr,
-                                   width=90,
-                                   height=30,
-                                   border_width=1,
-                                   corner_radius=1,
-                                   fg_color='#e8e6e6',
-                                   border_color='Black',
-                                   text_color='Black',
-                                   )
-old_entry.place(x=205,y=273)
-old_entry.insert(0,'New String')
+        for file_path in self.replace_file_list:
+            _, extension = os.path.splitext(file_path)
+            if selected_extension == "All extensions" or extension == selected_extension:
+                old_file_name = os.path.basename(file_path)
+                new_file_name = old_file_name
+                if replace_text:
+                    if self.replace_preserve_extensions.get():
+                        file_name, file_extension = os.path.splitext(old_file_name)
+                        if self.replace_use_regex.get():
+                            new_file_name = re.sub(replace_text, new_text, file_name) + file_extension
+                        else:
+                            new_file_name = file_name.replace(replace_text, new_text) + file_extension
+                    else:
+                        if self.replace_use_regex.get():
+                            new_file_name = re.sub(replace_text, new_text, old_file_name)
+                        else:
+                            new_file_name = old_file_name.replace(replace_text, new_text)
+                self.replace_listbox.insert(tk.END, new_file_name)
 
-old_entry_re = customtkinter.CTkEntry(right_fr,
-                                   width=120,
-                                   height=30,
-                                   border_width=1,
-                                   corner_radius=1,
-                                   fg_color='#e8e6e6',
-                                   border_color='Black',
-                                   text_color='Black',
-                                   )
-old_entry_re.place(x=165,y=383)
-old_entry_re.insert(0,'New String RE')
+    def replace_select_folder(self):
+        folder_path = filedialog.askdirectory()
+        if folder_path:
+            self.replace_folder_path = folder_path
+            self.replace_include_subfolders.set(0)  # Turn off the Include Subfolders checkbox
+            self.replace_use_regex.set(0)  # Turn off the Regular Expression checkbox
+            self.replace_preserve_extensions.set(0)  # Turn off the Preserve Extensions checkbox
+            self.extension_combobox.set("")
+            self.update_replace_listbox()
 
-#BUTTONS
-btn_browse = customtkinter.CTkButton(right_fr,
-                                     text='Browse Files',
-                                     width=180,
-                                     height=30,
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=browse)
-btn_browse.place(x=120,y=30)
+    def update_replace_file_list(self):
+        self.replace_file_list = []
+        if self.replace_include_subfolders.get():
+            for root_dir, _, files in os.walk(self.replace_folder_path):
+                for filename in files:
+                    self.replace_file_list.append(os.path.join(root_dir, filename))
+        else:
+            self.replace_file_list = [os.path.join(self.replace_folder_path, filename) for filename in
+                                      os.listdir(self.replace_folder_path) if
+                                      os.path.isfile(os.path.join(self.replace_folder_path, filename))]
 
-btn_replace = customtkinter.CTkButton(right_fr,
-                                     text='Replace',
-                                     width=80,
-                                     height=30,
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=replace_all_file)
-btn_replace.place(x=30,y=273)
-btn_replace_re = customtkinter.CTkButton(right_fr,
-                                     text='Replace using Regular Expression',
-                                     width=180,
-                                     height=30,
-                                     fg_color='Red',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=replace_all_file_re)
-btn_replace_re.place(x=30,y=335)
-btn_rename = customtkinter.CTkButton(right_fr,
-                                     text='Rename',
-                                     width=120,
-                                     height=30,
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=rename_all_file)
-btn_rename.place(x=30,y=440)
+    def update_replace_listbox(self, *args):
+        self.update_replace_file_list()
+        self.update_extension_combobox()
+        replace_text = self.replace_string.get()
+        new_text = self.replace_new_string.get() or ""
+        use_regex = self.replace_use_regex.get()
+        preserve_extensions = self.replace_preserve_extensions.get()
+        self.replace_listbox.delete(0, tk.END)
+        for file_path in self.replace_file_list:
+            _, extension = os.path.splitext(file_path)
+            if self.selected_extension == "All extensions" or extension == self.selected_extension:
+                old_file_name = os.path.basename(file_path)
+                if preserve_extensions:
+                    file_name, file_extension = os.path.splitext(old_file_name)
+                    new_file_name = file_name
+                    if use_regex:
+                        new_file_name = re.sub(replace_text, new_text, new_file_name)
+                    else:
+                        new_file_name = new_file_name.replace(replace_text, new_text)
+                    new_file_name += file_extension
+                else:
+                    new_file_name = old_file_name
+                    if use_regex:
+                        new_file_name = re.sub(replace_text, new_text, new_file_name)
+                    else:
+                        new_file_name = new_file_name.replace(replace_text, new_text)
+                self.replace_listbox.insert(tk.END, new_file_name)
 
-btn_rollback = customtkinter.CTkButton(right_fr,
-                                     text='Rollback',
-                                     width=70,
-                                     height=30,
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=rollback)
-btn_rollback.place(x=305,y=273)
-btn_quit = customtkinter.CTkButton(right_fr,
-                                     text='Quit',
-                                     width=70,
-                                     height=30,
-                                     fg_color='#3A7FF6',
-                                     text_color='White',
-                                     border_color='Black',
-                                     border_width=2,
-                                     command=lambda:root.destroy())
-btn_quit.place(x=305,y=440)
-btn_reg_instructions = customtkinter.CTkButton(left_fr,
-                                               text='Regular Exp. Examples',
-                                               width=50,
-                                               height=30,
-                                               fg_color='#3A7FF6',
-                                               text_color='White',
-                                               border_color='Black',
-                                               border_width=1,
-                                               command=show_ins)
-btn_reg_instructions.place(x=20,y=340)
+    def rename_replace_files(self):
+        old_string = self.replace_string.get()
+        new_string = self.replace_new_string.get() or " "
+        use_regex = self.replace_use_regex.get()
+        preserve_extensions = self.replace_preserve_extensions.get()
+        selected_extension = self.extension_combobox.get()
 
-#LISTBOX
-ls_box = Listbox(right_fr,
-                width=38,
-                height=10,
-                borderwidth=1,
-                background='#e8e6e6'
-                )
+        if old_string:
+            for file_path in self.replace_file_list:
+                file_dir, old_file_name = os.path.split(file_path)
+                _, extension = os.path.splitext(old_file_name)
 
-ls_box.place(x=30,y=80)
-     
-#BINDING
-new_entry.bind("<FocusIn>",clean_new_entry)
-old_entry.bind("<FocusIn>",clean_old_entry)
-new_entry_re.bind("<FocusIn>",clean_new_entry_re)
-old_entry_re.bind("<FocusIn>",clean_old_entry_re)
-new_entry_rename.bind("<FocusIn>",clean_new_entry_rename)
+                if selected_extension and extension != selected_extension:
+                    continue
 
-root.mainloop()
+                if preserve_extensions:
+                    file_name, file_extension = os.path.splitext(old_file_name)
+                    new_file_name = file_name
+                    if use_regex:
+                        new_file_name = re.sub(old_string, new_string, new_file_name)
+                    else:
+                        new_file_name = new_file_name.replace(old_string, new_string)
+                    new_file_name += file_extension
+                else:
+                    new_file_name = old_file_name
+                    if use_regex:
+                        new_file_name = re.sub(old_string, new_string, new_file_name)
+                    else:
+                        new_file_name = new_file_name.replace(old_string, new_string)
+                new_file_path = os.path.join(file_dir, new_file_name)
+                os.rename(file_path, new_file_path)
+                print(f"Renamed {old_file_name} to {new_file_name}")
+
+            self.update_extension_combobox()  # Update the extensions in the ComboBox
+            self.update_replace_listbox()  # Update the Listbox after renaming
+
+    def show_ins(self):
+        re_exp = tk.Toplevel(self.root)
+        re_exp.title('Regular Expressions Examples')
+        re_exp.geometry('480x300')
+        re_exp.resizable(0, 0)
+
+        re_exp_listbox = tk.Listbox(re_exp,
+                                    width=50,
+                                    height=20,
+                                    borderwidth=1,
+                                    background='#e8e6e6')
+        re_exp_listbox.pack()
+        re_exp_listbox.insert(tk.END, '. - Matches any single character except newline.\n',
+                              '^ - Matches the start of a string.\n',
+                              '$ - Matches the end of a string.\n',
+                              '* - Matches zero or more occurrences of the previous character or group.\n',
+                              '+ - Matches one or more occurrences of the previous character or group.\n',
+                              '? - Matches zero or one occurrence of the previous character or group.\n',
+                              '{n} - Matches exactly n occurrences of the previous character or group.\n',
+                              '{n,} - Matches n or more occurrences of the previous character or group.\n',
+                              '{n,m} - Matches at least n and at most m occurrences of the previous character or group.\n',
+                              '[abc] - Matches any one of the characters a, b, or c.\n',
+                              '[^abc] - Matches any character except a, b, or c.\n',
+                              '| - Matches either the expression before or after the vertical bar.\n',
+                              '\d - Matches any digit (0-9).\n',
+                              '\D - Matches any character that is not a digit.\n',
+                              '\w - Matches any word character (a-z, A-Z, 0-9, and underscore).\n',
+                              '\W - Matches any character that is not a word character.\n',
+                              '\s - Matches any whitespace character (space, tab, newline, etc.).\n',
+                              '\S - Matches any non-whitespace character.')
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = FileRenamerApp(root)
+    root.mainloop()
