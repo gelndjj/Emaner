@@ -1,84 +1,164 @@
-# Emaner
-_Emaner can batch rename your files. It also has the ability to replace any string you want in your files name using Regular Expressions._
+<a name="readme-top"></a>
 
+[![Contributors][contributors-shield]](https://github.com/gelndjj/Emaner/graphs/contributors)
+[![Forks][forks-shield]](https://github.com/gelndjj/Emaner/forks)
+[![Stargazers][stars-shield]](https://github.com/gelndjj/Emaner/stargazers)
+[![Issues][issues-shield]](https://github.com/gelndjj/Emaner/issues)
+[![MIT License][license-shield]](https://github.com/gelndjj/Emaner/blob/main/LICENSE)
+[![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/jonathanduthil/)
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/gelndjj/"Emaner">
+    <img src="https://github.com/gelndjj/Emaner/blob/main/resources/image.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Emaner</h3>
+
+  <p align="center">
+    Batch rename your files as per your will.
+    <br />
+    <a href="https://github.com/gelndjj/Emaner"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    ·
+    <a href="https://github.com/gelndjj/Emaner/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/gelndjj/Emaner/issues">Request Feature</a>
+  </p>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+
+  </ol>
+</details>
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+<div align="center">
+<img src="https://github.com/gelndjj/Emaner/blob/main/resources/main_windows.png" alt="Logo" width="541" height="393">
+</br>
+</br>
+The project came up from the idea to bulk rename files by extension.</br>
+</br>
+By tinkering with Python, I was able to write a script that rename your files as per your will. 
+Regular Expression is part of the script to personalize the naming.
+</div>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Built With
+
+<a href="https://www.python.org">
+<img src="https://github.com/gelndjj/Emaner/blob/main/resources/py_icon.png" alt="Icon" width="32" height="32">
+</a>
+&nbsp;
+<a href="https://customtkinter.tomschimansky.com">
+<img src="https://github.com/gelndjj/Emaner/blob/main/resources/ctk_icon.png" alt="Icon" width="32" height="32">
+</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+## Usage
+</br>
+
+
+<!-- GETTING STARTED -->
+## Standalone APP
+
+Install pyintaller
 ```
-88888888888                                                                  
-88                                                                           
-88                                                                           
-88aaaaa     88,dPYba,,adPYba,  ,adPPYYba, 8b,dPPYba,   ,adPPYba, 8b,dPPYba,  
-88"""""     88P'   "88"    "8a ""     `Y8 88P'   `"8a a8P_____88 88P'   "Y8  
-88          88      88      88 ,adPPPPP88 88       88 8PP""""""" 88          
-88          88      88      88 88,    ,88 88       88 "8b,   ,aa 88          
-88888888888 88      88      88 `"8bbdP"Y8 88       88  `"Ybbd8"' 88          
-            
+pip install pyinstaller
+```
+Generate the standalone app
+```
+pyinstaller --onefile your_script_name.py
 ```
 
-### SUMMARY
-Emaner grabs files from a folder you select and then gives you the option to replace a character or a character sequence in the files name.<br />
-The soft allows you to use Regular Expressions and has some instructions to better understand of RE work.<br />
-Finally you have the option to batch rename your files by typing the name you want; if the chosen name is identical to other files you are renaming, a number sequence will be added at final.<br />
 
-### SCREENSHOTS
+<!-- CONTRIBUTING -->
+## Contributing
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main.png)
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_browse.png)
-
-### HOW IT WORKS 
-1. Select a folder by clicking on the Browse button.
-2. Type an string or an string sequence you want to change from the current file name in the Old String field.
-3. And type the new string by which you want the file to be modified in the New String field.
-4. Click on Replace, the result is automatically shown in the window above. 
-
-* In the example below, we replace the string "Screenshot" by "Capture".
-
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_1.png)
-
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_replace_2.png)
-
-### USING REGULAR EXPRESSIONS
-The soft contains instructions to get familiar with RE; click on the Regular Exp. Examples button to display them.<br />
-
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/re_examples.png)
-
-We can use them the same way than replacing a string or an sequence in the file name.<br />
-
-* Here is an example using RE to replace a pattern.<br /> 
-The pattern will be represented as an hour format "HH.MM.SS"<br />
-According to the instructions the RE will be:<br /><br />
-
-> \d{2}\.\d{2}\.\d{2}<br />
-
->- \d{2} #look for 2 digits<br />
->- .\ #look for an '.'<br />
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re_1.png)
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-* Let's replace the above quoted pattern by the following {date}
-  
-> \d{2}\.\d{2}\.\d{2}<br />
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-> {date}<br/>
-> 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_re2.png)
 
-### BATCH RENAME FEATURE
-On the last field, type a name you want your files to have and click on the rename button.<br />
-All the present files will be named with this name and a number will be added at final.
 
-* Here is an example below where "Capture" will be the new name of every files. 
+<!-- LICENSE -->
+## License
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename_1.png)
+Distributed under the GNU GENERAL PUBLIC LICENSE. See `LICENSE.txt` for more information.
 
-![Screenshot](https://github.com/gelndjj/Emaner/blob/main/img/main_rename_2.png)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### ROLLBACK BUTTON
 
-If you made a mistake renaming a file, click on the button Rollback and it will reverse the action.<br />
-##### However, it only works with the first Replace feature so far.<br />
 
-### REQUIREMENTS INSTALLATION
-```
-pip install requirements.txt
-```
+<!-- CONTACT -->
+## Contact
+
+
+[LinkedIn](https://github.com/gelndjj/Emaner)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/othneildrew
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com 
