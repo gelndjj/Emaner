@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/gelndjj/"Emaner">
-    <img src="https://github.com/gelndjj/Emaner/blob/main/resources/image.png" alt="Logo" width="160" height="80">
+    <img src="https://github.com/gelndjj/Emaner/blob/main/resources/image.png" alt="Logo" width="628" height="293">
   </a>
 
   <h3 align="center">Emaner</h3>
