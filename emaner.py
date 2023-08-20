@@ -1,7 +1,5 @@
-import os
-import tkinter as tk
+import tkinter as tk, os, re
 from tkinter import ttk, filedialog
-import re
 
 class FileRenamerApp:
     def __init__(self, root):
@@ -29,11 +27,9 @@ class FileRenamerApp:
         self.left_label = tk.Label(self.left_frame, text=label_text, justify=tk.LEFT, bg='#3A7FF6', fg='white', font=("Georgia", int(14.0)))
         self.left_label.place(x=4,y=80)
 
-        # Right Frame
         self.right_frame = tk.Frame(self.root)
         self.right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Add a ComboBox to select extensions
         self.extension_combobox = ttk.Combobox(self.right_frame, values=[], state="readonly", width=12)
         self.extension_combobox.place(x=260, y=235)
         self.extension_combobox.bind("<<ComboboxSelected>>", self.update_extension_listbox)
@@ -126,9 +122,9 @@ class FileRenamerApp:
         folder_path = filedialog.askdirectory()
         if folder_path:
             self.replace_folder_path = folder_path
-            self.replace_include_subfolders.set(0)  # Turn off the Include Subfolders checkbox
-            self.replace_use_regex.set(0)  # Turn off the Regular Expression checkbox
-            self.replace_preserve_extensions.set(0)  # Turn off the Preserve Extensions checkbox
+            self.replace_include_subfolders.set(0)
+            self.replace_use_regex.set(0)
+            self.replace_preserve_extensions.set(0)
             self.extension_combobox.set("")
             self.update_replace_listbox()
 
