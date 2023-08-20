@@ -12,7 +12,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/gelndjj/"Emaner">
-    <img src="https://github.com/gelndjj/Emaner/blob/main/resources/image.png" alt="Logo" width="628" height="293">
+    <img src="https://github.com/gelndjj/Emaner/blob/main/resources/image.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Emaner</h3>
@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <div align="center">
-<img src="https://github.com/gelndjj/Emaner/blob/main/resources/main_windows.png" alt="Logo" width="541" height="393">
+<img src="https://github.com/gelndjj/Emaner/blob/main/resources/main_windows.png" alt="Logo" width="628" height="293">
 </br>
 </br>
 The project came up from the idea to bulk rename files by extension.</br>
