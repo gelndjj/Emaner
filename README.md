@@ -83,13 +83,13 @@ Regular Expression is part of the script to personalize the naming.
 
 |      	Feature	      |                            	Description	                            |
 |:-------------------:|:-------------------------------------------------------------------:|
-|    Select Folder    |            Display files present in the folder selected             |
+|    Select Folder    |            Display files present in the selected folder             |
 | Include Subfolders  |              Display files present in every subfolders              |
 | Regular Expression  | Activate the RE naming - The Replace field will accept RE sequences |
 |          ?          | Display the most used RE sequences in a separate window as example  |
-| Preserve Extension  |              Prevent the extensions file to be renamed              |
+| Preserve Extension  |              Prevent the extensions file to be changed              |
 |    Rename Files     |                        Execute the renaming                         |
-|   "Combobox"        |       Sort out files by extensions (down Right of the window)       |
+|   "Combobox"        |       Sort out files by extensions (down right of the window)       |
 
 
 </br>
