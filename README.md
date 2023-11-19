@@ -57,10 +57,20 @@
 <img src="https://github.com/gelndjj/Emaner/blob/main/resources/main_windows.png" alt="Logo" width="628" height="293">
 </br>
 </br>
-The project came up from the idea to bulk rename files by extension.</br>
+Emaner is a dynamic and user-friendly file renaming application designed to facilitate quick and efficient organization of your digital files. Developed in Python and utilizing the tkinter framework for its graphical user interface, Emaner stands out for its intuitive design and versatile functionality.</br>
 </br>
-By tinkering with Python, I was able to write a script that rename your files as per your will. 
-Regular Expression is part of the script to personalize the naming.
+</br>
+Key Features:
+
+1. Customizable File Renaming: Allows users to rename files in bulk according to specific patterns or criteria.
+2. Regular Expression Support: Advanced users can utilize regular expressions for complex renaming patterns, making it ideal for large datasets.
+3. User-Friendly Interface: Designed with a clean and easy-to-navigate GUI, ensuring accessibility for users of all skill levels.
+4. Extension-Specific Renaming: Users can target specific file extensions, providing greater control over the renaming process.
+5. Preview Capability: Before finalizing changes, users can preview the new file names, ensuring accuracy and satisfaction with the results.
+6. Platform Independence: Being a Python-based application, it can be run on any platform that supports Python and tkinter.
+</br>
+</br>
+Emaner is particularly suited for professionals who manage large collections of files, such as photographers, digital librarians, and data analysts, as well as for personal use in organizing documents, images, and multimedia files.
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -91,11 +101,17 @@ Regular Expression is part of the script to personalize the naming.
 |    Rename Files     |                        Execute the renaming                         |
 |   "Combobox"        |       Sort out files by extensions (down right of the window)       |
 
-
+1. Starting the Application: Simply run the emaner.py script in a Python environment where tkinter is installed.
+2. Selecting Files: Use the 'Select Folder' button to choose the directory containing the files you wish to rename.
+3. Setting Renaming Criteria:
+4. Basic Renaming: Enter the desired new name for the files.
+5. Using Regular Expressions: For advanced renaming, activate the regular expression option and enter the appropriate pattern.
+6. Choosing File Extensions: If you want to rename files of a specific type, select the desired extension from the dropdown menu.
+7. Preview Renames: Before applying changes, you can preview the new file names to ensure they match your expectations.
+8. Applying Changes: Once satisfied with the preview, click on 'Rename Files' to apply the changes.
 </br>
-
-#### Every character typed in the Replace field will be changed in the list.
-
+Note: Emaner also supports subfolder inclusion and preservation of file extensions during renaming, providing additional flexibility. Detailed instructions and tips for using regular expressions are provided within the application for users unfamiliar with this powerful tool.
+</br>
 
 <!-- GETTING STARTED -->
 ## Standalone APP
